@@ -82,10 +82,13 @@ Router.post('/', (req, res) => {
                     }
 
                 } else { // has not data
+
                     data = [{
                         status: '400',
                         message: 'Bad Request'
                     }];
+
+                    res.send(data);
                     return;
                 }
             }
