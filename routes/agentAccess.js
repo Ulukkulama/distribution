@@ -5,13 +5,15 @@ const SqlConnection = require('../dbConnection');
 
 const Router = express.Router();
 
-// Router.get('/', (req, res) => {
-//     res.send('jhg');
-// });
+Router.get('/', (req, res) => {
+    res.send('jhg');
+    console.log('ijhgyhgfyufgu');
+});
 
 // ------------------------------------------------------------------------------------------- //
 Router.post('/', (req, res) => {
 
+console.log(req);
     const Query =
         "SELECT" +
         " tbl_agent_prv.add_new_invoice," +
@@ -21,13 +23,15 @@ Router.post('/', (req, res) => {
         " tbl_agent_prv.pending_payment," +
         " tbl_agent_prv.return_prd," +
         " tbl_agent_mst.pass," +
-        " tbl_agent_mst.agent_id" +
+        " tbl_agent_mst.agent_id," +
+        " tbl_agent_mst.branch_id" +
         " FROM" +
         " tbl_agent_mst" +
         " INNER JOIN tbl_agent_prv ON tbl_agent_prv.agent_id = tbl_agent_mst.agent_id " +
         " WHERE" +
         " tbl_agent_mst.user_name = '" + `${req.body.user}` + "'";
 
+console.log(Query);
     let data = [];
 
     SqlConnection.query(Query,
@@ -44,6 +48,7 @@ Router.post('/', (req, res) => {
                             message: 'Null Password',
                             data: [{
                                 agentId: rows[0].agent_id,
+                                branch_id:rows[0].branch_id,
                                 addNewInv: rows[0].add_new_invoice[0],
                                 editInv: rows[0].edit_invoice[0],
                                 prdDev: rows[0].prd_delivary[0],
@@ -61,6 +66,7 @@ Router.post('/', (req, res) => {
                             message: 'ok',
                             data: [{
                                 agentId: rows[0].agent_id,
+                                branch_id:rows[0].branch_id,
                                 addNewInv: rows[0].add_new_invoice[0],
                                 editInv: rows[0].edit_invoice[0],
                                 prdDev: rows[0].prd_delivary[0],

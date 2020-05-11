@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 
 const mySqlConnection = require('./dbConnection');
 const agentAccessRoute = require('./routes/agentAccess');
+const shopsManageRoutes= require('./routes/shopsManage')
 
 const app = express();
 
@@ -10,7 +11,7 @@ const app = express();
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -27,9 +28,13 @@ app.use(function (req, res, next) {
 });
 
 app.use(bodyParser.json());
-app.use('/api/agent', agentAccessRoute);
 
-const port = (process.env.PORT || 3000);
+// ------------------------------------------- routes --------------------------------------------------- //
+app.use('/api/agent', agentAccessRoute);
+app.use('/api/shop', shopsManageRoutes);
+// ------------------------------------------------------------------------------------------------------ //
+
+const port = (process.env.PORT || 6969);
 
 app.listen(port, () => {
     console.log(port);
